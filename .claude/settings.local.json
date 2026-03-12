@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(nanobanana-skill:nanobanana-skill)",
+      "Skill(claude-api)",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && mkdir -p src/cli src/pipeline src/templates src/assets/images/generated out)",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && SKIP_LLM=1 npm run build)",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && SKIP_LLM=1 SKIP_IMAGES=1 npm run build)",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && SKIP_LLM=1 SKIP_IMAGES=1 SKIP_PDF=1 npm run build)",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && ALL_PROXY=\"socks5://127.0.0.1:7890\" python3 \"/Users/hilbert/.claude/plugins/cache/claude-code-settings/nanobanana-skill/1.0.0/skills/nanobanana-skill/nanobanana.py\" --prompt \"Test\" --size 1024x1024 --output \"src/assets/images/generated/_nanobanana_test.png\")",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && HTTP_PROXY=\"http://127.0.0.1:1082\" HTTPS_PROXY=\"http://127.0.0.1:1082\" python3 \"/Users/hilbert/.claude/plugins/cache/claude-code-settings/nanobanana-skill/1.0.0/skills/nanobanana-skill/nanobanana.py\" --prompt \"Test\" --size 1024x1024 --output \"src/assets/images/generated/_nanobanana_test.png\")",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && HTTP_PROXY=\"http://127.0.0.1:1082\" HTTPS_PROXY=\"http://127.0.0.1:1082\" python3 \"/Users/hilbert/.claude/plugins/cache/claude-code-settings/nanobanana-skill/1.0.0/skills/nanobanana-skill/nanobanana.py\" --prompt \"Create a simple abstract corporate background image. No text. Clearly output an IMAGE.\" --size 1024x1024 --output \"src/assets/images/generated/_nanobanana_test.png\")",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && HTTP_PROXY=\"http://127.0.0.1:1082\" HTTPS_PROXY=\"http://127.0.0.1:1082\" python3 \"/Users/hilbert/.claude/plugins/cache/claude-code-settings/nanobanana-skill/1.0.0/skills/nanobanana-skill/nanobanana.py\" --prompt \"Create a premium corporate healthcare-tech timeline infographic panel \\(no text\\). Visualize 4 milestones as icon nodes connected by a line \\(Jan 2023 start, deployment, co-innovation dashboard, expansion roadmap\\). Deep blue + slate palette, minimal, glassmorphism. Compose room for captions but do NOT include text.\" --size 1536x672 --output \"src/assets/images/generated/timeline_panel_1536x672.png\")",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && HTTP_PROXY=\"http://127.0.0.1:1082\" HTTPS_PROXY=\"http://127.0.0.1:1082\" python3 \"/Users/hilbert/.claude/plugins/cache/claude-code-settings/nanobanana-skill/1.0.0/skills/nanobanana-skill/nanobanana.py\" --prompt \"Using the provided Bayer radiology product images, create a single premium corporate storyboard illustration \\(no text\\): left side shows injector/contrast products, center shows CT/MR workflow and data pipeline, right shows dashboard analytics and decision loop. Deep blue + slate palette, minimal, clean, suitable for an A4 infographic. NO text.\" --input \"src/assets/images/MRCM.jpg\" \"src/assets/images/ultravist-picture.png\" --size 1248x832 --output \"src/assets/images/generated/storyboard_workflow_1248x832.png\")",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && HTTP_PROXY=\"http://127.0.0.1:1082\" HTTPS_PROXY=\"http://127.0.0.1:1082\" LITELLM_BASE_URL=\"http://localhost:4000/v1\" LITELLM_MODEL=\"mga-gpt-5\" npm run build)",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && HTTP_PROXY=\"http://127.0.0.1:1082\" HTTPS_PROXY=\"http://127.0.0.1:1082\" SKIP_LLM=1 npm run build)",
+      "Skill(planning-with-files:planning-with-files)",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && printf '%s\n' '.worktrees' '.worktrees/**' | while read p; do git check-ignore -v \"$p\" && exit 0; done; echo \"no-match\")",
+      "Bash(cd \"/Users/hilbert/LLM/Vibereport-2\" && mkdir -p .worktrees)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "MiniMax"
+  ]
+}
