@@ -1,7 +1,6 @@
 .worktrees/
-# Build outputs (intentionally tracked: out/images.generated.json)
+# Build outputs
 out/
-!out/images.generated.json
 node_modules/
 .DS_Store
 .env

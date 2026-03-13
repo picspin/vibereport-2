@@ -3,8 +3,14 @@ import fs from "node:fs";
 import crypto from "node:crypto";
 import { spawnSync } from "node:child_process";
 
-const NANO_PATH =
-  "/Users/hilbert/LLM/agents-and-tools/claude-code-settings/plugins/nanobanana-skill/skills/nanobanana-skill/nanobanana.py";
+const DEFAULT_NANO_PATH = path.resolve(
+  process.cwd(),
+  "skills/nanobanana-skill/nanobanana.py",
+);
+
+function resolveNanoPath() {
+  return process.env.NANOBANANA_SCRIPT || DEFAULT_NANO_PATH;
+}
 
 function sha256(s) {
   return crypto.createHash("sha256").update(s).digest("hex");
@@ -39,7 +45,7 @@ export function generateImagesNanobanana({ repoRoot, prompts, resolution = "1K" 
     }
 
     const args = [
-      NANO_PATH,
+      resolveNanoPath(),
       "--prompt",
       p.prompt,
       "--size",
