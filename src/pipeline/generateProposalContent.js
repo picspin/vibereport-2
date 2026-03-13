@@ -43,6 +43,18 @@ Return ONLY valid JSON with this exact schema:
   "word_count": number,
   "fx_assumption": {"usd_to_rmb": number, "note": string},
   "budget": {"usd": number, "rmb": number, "note": string},
+  "budget_box": {
+    "lump_sum": {"usd": number, "rmb": number},
+    "fx_assumption": {"usd_to_rmb": number, "note": string},
+    "constraints": [string],
+    "line_items": [
+      {"item": string, "role": string, "usd": number, "rmb": number, "notes": string}
+    ],
+    "roles": [
+      {"role": string, "responsibilities": [string]}
+    ],
+    "total_check": {"usd": number, "rmb": number}
+  },
   "sections": [
     {"id": "5.1", "heading": "5.1 Executive Summary", "text": string},
     {"id": "5.2", "heading": "5.2 Clinical & Workflow Problem", "text": string},
@@ -107,6 +119,34 @@ export function validateProposalJson(proposal) {
 
   if (!Number.isFinite(proposal.word_count)) {
     throw new Error("proposal.word_count must be a number");
+  }
+
+  if (!proposal.budget_box || typeof proposal.budget_box !== "object") {
+    throw new Error("proposal.budget_box must exist and be an object");
+  }
+  if (!proposal.budget_box.lump_sum || typeof proposal.budget_box.lump_sum !== "object") {
+    throw new Error("proposal.budget_box.lump_sum must exist and be an object");
+  }
+  if (!Number.isFinite(proposal.budget_box.lump_sum.usd) || proposal.budget_box.lump_sum.usd >= 100000) {
+    throw new Error("proposal.budget_box.lump_sum.usd must be a number < 100000");
+  }
+  if (!Number.isFinite(proposal.budget_box.lump_sum.rmb)) {
+    throw new Error("proposal.budget_box.lump_sum.rmb must be a number");
+  }
+  if (!proposal.budget_box.fx_assumption || typeof proposal.budget_box.fx_assumption !== "object") {
+    throw new Error("proposal.budget_box.fx_assumption must exist and be an object");
+  }
+  if (!Number.isFinite(proposal.budget_box.fx_assumption.usd_to_rmb)) {
+    throw new Error("proposal.budget_box.fx_assumption.usd_to_rmb must be a number");
+  }
+  if (typeof proposal.budget_box.fx_assumption.note !== "string" || !proposal.budget_box.fx_assumption.note.trim()) {
+    throw new Error("proposal.budget_box.fx_assumption.note must be a non-empty string");
+  }
+  if (!Array.isArray(proposal.budget_box.line_items) || proposal.budget_box.line_items.length === 0) {
+    throw new Error("proposal.budget_box.line_items must be a non-empty array");
+  }
+  if (!Array.isArray(proposal.budget_box.roles) || proposal.budget_box.roles.length === 0) {
+    throw new Error("proposal.budget_box.roles must be a non-empty array");
   }
 
   if (!Array.isArray(proposal.citations)) throw new Error("proposal.citations must be an array");
