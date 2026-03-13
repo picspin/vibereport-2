@@ -1,0 +1,58 @@
+[
+  {
+    "name": "hero",
+    "size": "1344x768",
+    "model": "gemini-3-pro-image-preview",
+    "prompt": "(see src/pipeline/generateImagesNanobanana.js defaultNanobananaPrompts)",
+    "path": "src/assets/images/generated/hero_1344x768.png",
+    "cached": true
+  },
+  {
+    "name": "integration",
+    "size": "1248x832",
+    "model": "gemini-3-pro-image-preview",
+    "prompt": "(see src/pipeline/generateImagesNanobanana.js defaultNanobananaPrompts)",
+    "path": "src/assets/images/generated/integration_1248x832.png",
+    "cached": true
+  },
+  {
+    "name": "dashboard",
+    "size": "1024x1024",
+    "model": "gemini-3-pro-image-preview",
+    "prompt": "(see src/pipeline/generateImagesNanobanana.js defaultNanobananaPrompts)",
+    "path": "src/assets/images/generated/dashboard_1024x1024.png",
+    "cached": true
+  },
+  {
+    "name": "proposal_program_architecture",
+    "size": "1536x672",
+    "model": "gemini-3-pro-image-preview",
+    "prompt": "(see src/pipeline/generateImagesNanobanana.js defaultNanobananaPrompts)",
+    "path": "src/assets/images/generated/proposal_program_architecture_1536x672.png",
+    "cached": false
+  },
+  {
+    "name": "proposal_dose_governance_loop",
+    "size": "1536x672",
+    "model": "gemini-3-pro-image-preview",
+    "prompt": "(see src/pipeline/generateImagesNanobanana.js defaultNanobananaPrompts)",
+    "path": "src/assets/images/generated/proposal_dose_governance_loop_1536x672.png",
+    "cached": false
+  },
+  {
+    "name": "proposal_consortium_scaling_blueprint",
+    "size": "1536x672",
+    "model": "gemini-3-pro-image-preview",
+    "prompt": "(see src/pipeline/generateImagesNanobanana.js defaultNanobananaPrompts)",
+    "path": "src/assets/images/generated/proposal_consortium_scaling_blueprint_1536x672.png",
+    "cached": false
+  },
+  {
+    "name": "proposal_implementation_roadmap",
+    "size": "1536x672",
+    "model": "gemini-3-pro-image-preview",
+    "prompt": "(see src/pipeline/generateImagesNanobanana.js defaultNanobananaPrompts)",
+    "path": "src/assets/images/generated/proposal_implementation_roadmap_1536x672.png",
+    "cached": false
+  }
+]

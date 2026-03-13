@@ -232,13 +232,24 @@ function renderBulletsFromText(text) {
   return `<ul>${bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>`;
 }
 
-export function renderProposalHtml({ proposal, requirements, cssText }) {
+export function renderProposalHtml({ proposal, requirements, cssText, images = [] }) {
   const title = proposal?.title || "Scientific Collaboration Proposal";
   const pageLang = proposal?.language === "en" ? "en" : "en";
+
+  const imgByName = new Map((images || []).map((i) => [i.name, i]));
 
   const sections = Array.isArray(proposal?.sections) ? proposal.sections : [];
   const citations = Array.isArray(proposal?.citations) ? proposal.citations : [];
   const budgetBox = proposal?.budget_box || null;
+
+  const figureForSectionId = (id) => {
+    const key = String(id || "");
+    if (key === "5.5") return imgByName.get("proposal_program_architecture");
+    if (key === "5.8") return imgByName.get("proposal_dose_governance_loop");
+    if (key === "5.9") return imgByName.get("proposal_consortium_scaling_blueprint");
+    if (key === "5.10") return imgByName.get("proposal_implementation_roadmap");
+    return null;
+  };
 
   const sectionHtml = sections
     .map((s) => {
@@ -254,15 +265,21 @@ export function renderProposalHtml({ proposal, requirements, cssText }) {
           .join("\n"),
       );
 
+      const fig = figureForSectionId(id);
+      const figureHtml = fig
+        ? `<figure class="figure"><img alt="diagram" src="${escapeHtml(fig.path)}" /><figcaption class="muted">Diagram (auto-generated)</figcaption></figure>`
+        : `
+          <div class="figure-placeholder">
+            <div class="figure-title">Figure placeholder</div>
+            <div class="figure-note">Add diagram/infographic relevant to ${escapeHtml(heading)}.</div>
+          </div>`;
+
       return `
         <section class="section" id="sec-${escapeHtml(id)}">
           <h2>${escapeHtml(heading)}</h2>
           ${paraHtml}
           ${bulletHtml}
-          <div class="figure-placeholder">
-            <div class="figure-title">Figure placeholder</div>
-            <div class="figure-note">Add diagram/infographic relevant to ${escapeHtml(heading)}.</div>
-          </div>
+          ${figureHtml}
         </section>`;
     })
     .join("\n");

@@ -116,6 +116,29 @@
   font-size: 10.5px;
 }
 
+.figure {
+  margin-top: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 8px;
+  background: rgba(0,0,0,0.12);
+}
+
+.figure img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.figure figcaption {
+  margin-top: 6px;
+  font-size: 10.5px;
+  color: rgba(255,255,255,0.62);
+}
+
 .figure-placeholder {
   margin-top: 10px;
   border: 1px dashed rgba(255,255,255,0.22);

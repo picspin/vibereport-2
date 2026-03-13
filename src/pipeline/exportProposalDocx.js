@@ -220,19 +220,59 @@ export async function exportProposalDocx({ outPath, proposal, requirements, repo
     );
   }
 
-  // Figure placeholder(s)
+  // Figures (auto-embed if available)
   children.push(blank());
   children.push(heading("Figures", HeadingLevel.HEADING_2));
+
   children.push(
     ...tryEmbedImage({
       repoRoot,
       candidates: [
-        "src/assets/images/generated/proposal_overview_1536x672.png",
-        "src/assets/images/generated/booth_infographic_overview_1536x672.png",
+        "src/assets/images/generated/proposal_program_architecture_1536x672.png",
+        "src/assets/images/generated/proposal_program_architecture.png",
       ],
       width: 640,
       height: 280,
-      caption: "Figure 1. Proposal overview (placeholder if image not available).",
+      caption: "Figure 1. Program architecture (informatics + Radimetrics + injector + contrast).",
+    }),
+  );
+
+  children.push(
+    ...tryEmbedImage({
+      repoRoot,
+      candidates: [
+        "src/assets/images/generated/proposal_dose_governance_loop_1536x672.png",
+        "src/assets/images/generated/proposal_dose_governance_loop.png",
+      ],
+      width: 640,
+      height: 280,
+      caption: "Figure 2. Dose governance closed-loop (alert → review → action).",
+    }),
+  );
+
+  children.push(
+    ...tryEmbedImage({
+      repoRoot,
+      candidates: [
+        "src/assets/images/generated/proposal_consortium_scaling_blueprint_1536x672.png",
+        "src/assets/images/generated/proposal_consortium_scaling_blueprint.png",
+      ],
+      width: 640,
+      height: 280,
+      caption: "Figure 3. Consortium scaling blueprint (hub-and-spoke).",
+    }),
+  );
+
+  children.push(
+    ...tryEmbedImage({
+      repoRoot,
+      candidates: [
+        "src/assets/images/generated/proposal_implementation_roadmap_1536x672.png",
+        "src/assets/images/generated/proposal_implementation_roadmap.png",
+      ],
+      width: 640,
+      height: 280,
+      caption: "Figure 4. Implementation roadmap (Phase 1–3).",
     }),
   );
 

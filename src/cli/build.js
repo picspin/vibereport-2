@@ -77,7 +77,7 @@ async function main() {
   const cssText = readCss(repoRoot);
 
   if (proposal) {
-    const proposalHtml = renderProposalHtml({ proposal, requirements, cssText });
+    const proposalHtml = renderProposalHtml({ proposal, requirements, cssText, images });
     const proposalHtmlPath = path.join(outDir, "proposal.en.html");
     fs.writeFileSync(proposalHtmlPath, proposalHtml, "utf8");
     console.log(`Wrote ${path.relative(repoRoot, proposalHtmlPath)}`);
