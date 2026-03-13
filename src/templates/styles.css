@@ -3,6 +3,159 @@
   margin: 12mm;
 }
 
+/* Proposal (multi-page) */
+.proposal {
+  width: 210mm;
+  margin: 0 auto;
+  padding: 12mm;
+}
+
+.proposal-header {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.04);
+}
+
+.proposal-title {
+  font-size: 22px;
+  line-height: 1.15;
+  font-weight: 780;
+  margin: 0 0 6px;
+}
+
+.proposal-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.72);
+}
+
+.section {
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  padding: 12px 14px;
+  page-break-inside: avoid;
+}
+
+.section h2 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.84);
+}
+
+.section p {
+  margin: 0 0 8px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.86);
+}
+
+.section p:last-child { margin-bottom: 0; }
+
+.muted {
+  color: var(--muted);
+}
+
+.budget-box {
+  margin-top: 12px;
+  border: 1px solid rgba(56,189,248,0.35);
+  background: linear-gradient(135deg, rgba(56,189,248,0.16), rgba(96,165,250,0.06));
+  border-radius: 14px;
+  padding: 12px 14px;
+  page-break-inside: avoid;
+}
+
+.budget-box h3 {
+  margin: 0 0 8px;
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.budget-top {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.budget-amount {
+  font-size: 18px;
+  font-weight: 760;
+}
+
+.budget-fx {
+  font-size: 11.5px;
+  margin-bottom: 8px;
+}
+
+.budget-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.budget-table th,
+.budget-table td {
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 6px 6px;
+  vertical-align: top;
+}
+
+.budget-table th {
+  background: rgba(0,0,0,0.18);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 10.5px;
+}
+
+.figure-placeholder {
+  margin-top: 10px;
+  border: 1px dashed rgba(255,255,255,0.22);
+  border-radius: 12px;
+  padding: 10px;
+  background: rgba(0,0,0,0.10);
+}
+
+.figure-title {
+  font-weight: 700;
+  font-size: 11.5px;
+  margin-bottom: 4px;
+}
+
+.figure-note {
+  font-size: 11px;
+  color: rgba(255,255,255,0.70);
+}
+
+.references ol {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.references li {
+  margin: 8px 0;
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+
+.ref-title { font-weight: 650; }
+.ref-url { font-size: 11px; color: rgba(255,255,255,0.70); word-break: break-all; }
+.ref-claim { margin-top: 3px; color: rgba(255,255,255,0.82); }
+.ref-where { margin-top: 3px; color: rgba(255,255,255,0.62); font-size: 11px; }
+
+.proposal-footer {
+  margin: 12px 2px 0;
+  font-size: 10.5px;
+}
+
 :root {
   --bg: #0b1220;
   --panel: rgba(255, 255, 255, 0.06);

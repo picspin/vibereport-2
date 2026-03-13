@@ -207,3 +207,149 @@ export function renderBoothInfographicHtml({ lang, copy, requirements, images, c
 export function readCss(repoRoot) {
   return fs.readFileSync(path.join(repoRoot, "src/templates/styles.css"), "utf8");
 }
+
+function splitParagraphs(text) {
+  return String(text || "")
+    .split(/\n\s*\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+}
+
+function renderParagraphs(text) {
+  const parts = splitParagraphs(text);
+  if (!parts.length) return "";
+  return parts.map((p) => `<p>${escapeHtml(p)}</p>`).join("\n");
+}
+
+function renderBulletsFromText(text) {
+  const lines = String(text || "")
+    .split(/\n/)
+    .map((l) => l.trim())
+    .filter(Boolean);
+
+  const bullets = lines.filter((l) => l.startsWith("- ")).map((l) => l.slice(2).trim());
+  if (!bullets.length) return "";
+  return `<ul>${bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}</ul>`;
+}
+
+export function renderProposalHtml({ proposal, requirements, cssText }) {
+  const title = proposal?.title || "Scientific Collaboration Proposal";
+  const pageLang = proposal?.language === "en" ? "en" : "en";
+
+  const sections = Array.isArray(proposal?.sections) ? proposal.sections : [];
+  const citations = Array.isArray(proposal?.citations) ? proposal.citations : [];
+  const budgetBox = proposal?.budget_box || null;
+
+  const sectionHtml = sections
+    .map((s) => {
+      const id = s?.id || "";
+      const heading = s?.heading || "";
+      const text = s?.text || "";
+
+      const bulletHtml = renderBulletsFromText(text);
+      const paraHtml = renderParagraphs(
+        String(text || "")
+          .split(/\n/)
+          .filter((l) => !l.trim().startsWith("- "))
+          .join("\n"),
+      );
+
+      return `
+        <section class="section" id="sec-${escapeHtml(id)}">
+          <h2>${escapeHtml(heading)}</h2>
+          ${paraHtml}
+          ${bulletHtml}
+          <div class="figure-placeholder">
+            <div class="figure-title">Figure placeholder</div>
+            <div class="figure-note">Add diagram/infographic relevant to ${escapeHtml(heading)}.</div>
+          </div>
+        </section>`;
+    })
+    .join("\n");
+
+  const referencesHtml = citations.length
+    ? `<ol>${citations
+        .map((c) => {
+          const src = c?.source || {};
+          const year = src?.year ? ` (${escapeHtml(src.year)})` : "";
+          const titleText = src?.title ? escapeHtml(src.title) : escapeHtml(c?.id || "Source");
+          const url = src?.url ? String(src.url) : null;
+          const where = Array.isArray(c?.where_used) ? c.where_used.join(", ") : "";
+          const claim = c?.claim ? escapeHtml(c.claim) : "";
+          return `<li>
+              <div class="ref-title">${titleText}${year}</div>
+              ${url ? `<div class="ref-url">${escapeHtml(url)}</div>` : ""}
+              ${claim ? `<div class="ref-claim">${claim}</div>` : ""}
+              ${where ? `<div class="ref-where">Used in: ${escapeHtml(where)}</div>` : ""}
+            </li>`;
+        })
+        .join("\n")}</ol>`
+    : `<div class="muted">No references provided.</div>`;
+
+  const budgetHtml = budgetBox
+    ? `
+      <div class="budget-box">
+        <h3>Budget (lump-sum)</h3>
+        <div class="budget-top">
+          <div class="budget-amount">USD ${escapeHtml(budgetBox?.lump_sum?.usd)}</div>
+          <div class="budget-amount muted">RMB ${escapeHtml(budgetBox?.lump_sum?.rmb)}</div>
+        </div>
+        <div class="budget-fx muted">FX: 1 USD = ${escapeHtml(budgetBox?.fx_assumption?.usd_to_rmb)} RMB (${escapeHtml(
+          budgetBox?.fx_assumption?.note || "",
+        )})</div>
+        ${budgetBox?.constraints?.length ? `<ul>${budgetBox.constraints.map((x) => `<li>${escapeHtml(x)}</li>`).join("")}</ul>` : ""}
+        ${budgetBox?.line_items?.length ? `
+          <table class="budget-table">
+            <thead><tr><th>Item</th><th>Role</th><th>USD</th><th>RMB</th><th>Notes</th></tr></thead>
+            <tbody>
+              ${budgetBox.line_items
+                .map(
+                  (li) => `<tr>
+                    <td>${escapeHtml(li?.item)}</td>
+                    <td>${escapeHtml(li?.role)}</td>
+                    <td>${escapeHtml(li?.usd)}</td>
+                    <td>${escapeHtml(li?.rmb)}</td>
+                    <td>${escapeHtml(li?.notes)}</td>
+                  </tr>`,
+                )
+                .join("\n")}
+            </tbody>
+          </table>`
+        : ""}
+      </div>`
+    : `<div class="budget-box"><h3>Budget</h3><div class="muted">Budget box missing in proposal JSON.</div></div>`;
+
+  return `<!doctype html>
+<html lang="${pageLang}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${escapeHtml(title)}</title>
+  <style>${cssText}</style>
+</head>
+<body>
+  <main class="proposal">
+    <header class="proposal-header">
+      <div class="proposal-title">${escapeHtml(title)}</div>
+      <div class="proposal-meta">
+        <div>${escapeHtml(requirements?.client?.name || "")}</div>
+        <div class="muted">Word count: ${escapeHtml(proposal?.word_count || "")}</div>
+      </div>
+    </header>
+
+    ${budgetHtml}
+
+    ${sectionHtml}
+
+    <section class="section references" id="references">
+      <h2>References</h2>
+      ${referencesHtml}
+    </section>
+
+    <footer class="proposal-footer muted">
+      Generated: ${escapeHtml(new Date().toISOString().slice(0, 10))}
+    </footer>
+  </main>
+</body>
+</html>`;
+}
