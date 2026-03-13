@@ -5,6 +5,7 @@ import fs from "node:fs";
 
 import { parseRequirementsFile } from "../pipeline/parseRequirements.js";
 import { generateBilingualContent } from "../pipeline/generateBilingualContent.js";
+import { generateProposalContent } from "../pipeline/generateProposalContent.js";
 import {
   defaultNanobananaPrompts,
   generateImagesNanobanana,
@@ -32,13 +33,19 @@ async function main() {
   console.log(`Wrote ${path.relative(repoRoot, snapshotPath)}`);
 
   let bilingual = null;
+  let proposal = null;
   if (process.env.SKIP_LLM !== "1") {
     bilingual = await generateBilingualContent(requirements);
     const copyPath = path.join(outDir, "copy.bilingual.json");
     fs.writeFileSync(copyPath, JSON.stringify(bilingual, null, 2) + "\n", "utf8");
     console.log(`Wrote ${path.relative(repoRoot, copyPath)}`);
+
+    proposal = await generateProposalContent(requirements);
+    const proposalPath = path.join(outDir, "proposal.en.json");
+    fs.writeFileSync(proposalPath, JSON.stringify(proposal, null, 2) + "\n", "utf8");
+    console.log(`Wrote ${path.relative(repoRoot, proposalPath)}`);
   } else {
-    console.log("SKIP_LLM=1 set; skipping Claude copy generation");
+    console.log("SKIP_LLM=1 set; skipping Claude copy + proposal generation");
   }
 
   let images = [];
