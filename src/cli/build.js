@@ -13,6 +13,7 @@ import {
 import { readCss, renderBoothInfographicHtml, renderProposalHtml } from "../templates/renderInfographic.js";
 import { exportPdf } from "../pipeline/exportPdf.js";
 import { exportDocx } from "../pipeline/exportDocx.js";
+import { exportProposalDocx } from "../pipeline/exportProposalDocx.js";
 import { defaultStoryImages, exportStoryDocx } from "../pipeline/exportStoryDocx.js";
 
 function ensureDir(p) {
@@ -88,8 +89,16 @@ async function main() {
     } else {
       console.log("SKIP_PDF=1 set; skipping PDF export");
     }
+
+    if (process.env.SKIP_DOCX !== "1") {
+      const proposalDocxPath = path.join(outDir, "proposal.en.docx");
+      await exportProposalDocx({ outPath: proposalDocxPath, proposal, requirements, repoRoot });
+      console.log(`Wrote ${path.relative(repoRoot, proposalDocxPath)}`);
+    } else {
+      console.log("SKIP_DOCX=1 set; skipping proposal DOCX export");
+    }
   } else {
-    console.log("No proposal loaded/generated; skipping proposal HTML/PDF render");
+    console.log("No proposal loaded/generated; skipping proposal HTML/PDF/DOCX render");
   }
 
   const langs = [
