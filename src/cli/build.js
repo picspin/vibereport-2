@@ -5,13 +5,15 @@ import fs from "node:fs";
 
 import { parseRequirementsFile } from "../pipeline/parseRequirements.js";
 import { generateBilingualContent } from "../pipeline/generateBilingualContent.js";
+import { generateProposalContent } from "../pipeline/generateProposalContent.js";
 import {
   defaultNanobananaPrompts,
   generateImagesNanobanana,
 } from "../pipeline/generateImagesNanobanana.js";
-import { readCss, renderBoothInfographicHtml } from "../templates/renderInfographic.js";
+import { readCss, renderBoothInfographicHtml, renderProposalHtml } from "../templates/renderInfographic.js";
 import { exportPdf } from "../pipeline/exportPdf.js";
 import { exportDocx } from "../pipeline/exportDocx.js";
+import { exportProposalDocx } from "../pipeline/exportProposalDocx.js";
 import { defaultStoryImages, exportStoryDocx } from "../pipeline/exportStoryDocx.js";
 
 function ensureDir(p) {
@@ -32,13 +34,24 @@ async function main() {
   console.log(`Wrote ${path.relative(repoRoot, snapshotPath)}`);
 
   let bilingual = null;
+  let proposal = null;
+  const proposalPath = path.join(outDir, "proposal.en.json");
+
   if (process.env.SKIP_LLM !== "1") {
     bilingual = await generateBilingualContent(requirements);
     const copyPath = path.join(outDir, "copy.bilingual.json");
     fs.writeFileSync(copyPath, JSON.stringify(bilingual, null, 2) + "\n", "utf8");
     console.log(`Wrote ${path.relative(repoRoot, copyPath)}`);
+
+    proposal = await generateProposalContent(requirements);
+    fs.writeFileSync(proposalPath, JSON.stringify(proposal, null, 2) + "\n", "utf8");
+    console.log(`Wrote ${path.relative(repoRoot, proposalPath)}`);
   } else {
-    console.log("SKIP_LLM=1 set; skipping Claude copy generation");
+    console.log("SKIP_LLM=1 set; skipping Claude copy + proposal generation");
+    if (fs.existsSync(proposalPath)) {
+      proposal = JSON.parse(fs.readFileSync(proposalPath, "utf8"));
+      console.log(`Loaded ${path.relative(repoRoot, proposalPath)}`);
+    }
   }
 
   let images = [];
@@ -62,6 +75,31 @@ async function main() {
   }
 
   const cssText = readCss(repoRoot);
+
+  if (proposal) {
+    const proposalHtml = renderProposalHtml({ proposal, requirements, cssText, images });
+    const proposalHtmlPath = path.join(outDir, "proposal.en.html");
+    fs.writeFileSync(proposalHtmlPath, proposalHtml, "utf8");
+    console.log(`Wrote ${path.relative(repoRoot, proposalHtmlPath)}`);
+
+    if (process.env.SKIP_PDF !== "1") {
+      const proposalPdfPath = path.join(outDir, "proposal.en.a4.pdf");
+      await exportPdf({ htmlPath: proposalHtmlPath, pdfPath: proposalPdfPath });
+      console.log(`Wrote ${path.relative(repoRoot, proposalPdfPath)}`);
+    } else {
+      console.log("SKIP_PDF=1 set; skipping PDF export");
+    }
+
+    if (process.env.SKIP_DOCX !== "1") {
+      const proposalDocxPath = path.join(outDir, "proposal.en.docx");
+      await exportProposalDocx({ outPath: proposalDocxPath, proposal, requirements, repoRoot });
+      console.log(`Wrote ${path.relative(repoRoot, proposalDocxPath)}`);
+    } else {
+      console.log("SKIP_DOCX=1 set; skipping proposal DOCX export");
+    }
+  } else {
+    console.log("No proposal loaded/generated; skipping proposal HTML/PDF/DOCX render");
+  }
 
   const langs = [
     { key: "en", html: "booth_infographic.en.html", pdf: "booth_infographic.en.a4.pdf" },
