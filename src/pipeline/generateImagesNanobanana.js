@@ -120,6 +120,42 @@ export function defaultNanobananaPrompts({ requirements, lang = "en" }) {
 
     // Proposal diagrams pack
     {
+      name: "proposal_graphical_abstract",
+      size: "1536x672",
+      model: "gemini-3-pro-image-preview",
+      prompt:
+        lang === "zh"
+          ? "top-journal graphical abstract style, clean white background, vector-like, high contrast, Okabe-Ito colorblind-safe palette, professional sans-serif labels, minimal text. Create a graphical abstract summarizing an Abdominal CT Excellence Program: Indication capture → Smart Protocol recommendation → protocol-linked injection template (Centargo/Stellant) → Radimetrics dose governance + dashboard → improved standardization & reduced outliers. Include 4-6 labeled blocks with arrows, plus a small hub-and-spoke icon indicating scalability. Ensure labels are large and clearly spelled; do not include any long paragraphs."
+          : "top-journal graphical abstract style, clean white background, vector-like, high contrast, Okabe-Ito colorblind-safe palette, professional sans-serif labels, minimal text. Create a graphical abstract summarizing an Abdominal CT Excellence Program: Indication capture → Smart Protocol recommendation → protocol-linked injection template (Centargo/Stellant) → Radimetrics dose governance + dashboard → improved standardization & reduced outliers. Include 4-6 labeled blocks with arrows, plus a small hub-and-spoke icon indicating scalability. Ensure labels are large and clearly spelled; do not include any long paragraphs.",
+    },
+    {
+      name: "proposal_problem_map",
+      size: "1536x672",
+      model: "gemini-3-pro-image-preview",
+      prompt:
+        lang === "zh"
+          ? "top-journal scientific schematic, clean white background, vector-like, high contrast, Okabe-Ito palette, readable sans-serif labels. Create a clinical/workflow problem map for high-volume abdominal CT: show sources of variability (manual protocol selection, contrast timing variance, reconstruction variability, dose drift) leading to downstream impacts (repeat scans, inconsistent lesion conspicuity, reporting delays, workload). Use a cause→effect layout with 6-8 short labeled nodes and arrows. Keep labels short and correctly spelled; no decorative background."
+          : "top-journal scientific schematic, clean white background, vector-like, high contrast, Okabe-Ito palette, readable sans-serif labels. Create a clinical/workflow problem map for high-volume abdominal CT: show sources of variability (manual protocol selection, contrast timing variance, reconstruction variability, dose drift) leading to downstream impacts (repeat scans, inconsistent lesion conspicuity, reporting delays, workload). Use a cause→effect layout with 6-8 short labeled nodes and arrows. Keep labels short and correctly spelled; no decorative background.",
+    },
+    {
+      name: "proposal_product_innovation_map",
+      size: "1536x672",
+      model: "gemini-3-pro-image-preview",
+      prompt:
+        lang === "zh"
+          ? "top-journal style product+clinical innovation map, clean white background, vector-like. Draw a 3-layer diagram: (1) Data inputs (PACS/RIS metadata, injector logs, dose reports), (2) Product modules (Smart Protocol, Centargo/Stellant templates, Radimetrics governance, dashboard analytics), (3) Outcomes (protocol adherence, fewer dose outliers, fewer repeats, faster time-to-report). Use clear labeled boxes and arrows. Use Okabe-Ito palette, minimal text, large legible labels, no long sentences."
+          : "top-journal style product+clinical innovation map, clean white background, vector-like. Draw a 3-layer diagram: (1) Data inputs (PACS/RIS metadata, injector logs, dose reports), (2) Product modules (Smart Protocol, Centargo/Stellant templates, Radimetrics governance, dashboard analytics), (3) Outcomes (protocol adherence, fewer dose outliers, fewer repeats, faster time-to-report). Use clear labeled boxes and arrows. Use Okabe-Ito palette, minimal text, large legible labels, no long sentences.",
+    },
+    {
+      name: "proposal_study_design_flow",
+      size: "1536x672",
+      model: "gemini-3-pro-image-preview",
+      prompt:
+        lang === "zh"
+          ? "top-journal CONSORT-like flow diagram for a pragmatic workflow study, clean white background, high contrast, sans-serif labels. Show phases: Retrospective baseline → Prospective pilot → Expansion to consortium branches → Product integration. Under each phase, show key data streams (protocol metadata, injector logs, dose SR/Radimetrics, timestamps). Add an evaluation bar indicating pre/post comparison and governance cycles. Keep labels short, clearly spelled, minimal text, no paragraphs."
+          : "top-journal CONSORT-like flow diagram for a pragmatic workflow study, clean white background, high contrast, sans-serif labels. Show phases: Retrospective baseline → Prospective pilot → Expansion to consortium branches → Product integration. Under each phase, show key data streams (protocol metadata, injector logs, dose SR/Radimetrics, timestamps). Add an evaluation bar indicating pre/post comparison and governance cycles. Keep labels short, clearly spelled, minimal text, no paragraphs.",
+    },
+    {
       name: "proposal_program_architecture",
       size: "1536x672",
       model: "gemini-3-pro-image-preview",
