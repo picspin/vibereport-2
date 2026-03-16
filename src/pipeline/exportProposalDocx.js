@@ -228,12 +228,64 @@ export async function exportProposalDocx({ outPath, proposal, requirements, repo
     ...tryEmbedImage({
       repoRoot,
       candidates: [
+        "src/assets/images/generated/proposal_graphical_abstract_1536x672.png",
+        "src/assets/images/generated/proposal_graphical_abstract.png",
+      ],
+      width: 640,
+      height: 280,
+      caption: "Figure 1. Graphical abstract (Abdominal CT Excellence Program).",
+    }),
+  );
+
+  children.push(
+    ...tryEmbedImage({
+      repoRoot,
+      candidates: [
+        "src/assets/images/generated/proposal_problem_map_1536x672.png",
+        "src/assets/images/generated/proposal_problem_map.png",
+      ],
+      width: 640,
+      height: 280,
+      caption: "Figure 2. Clinical + workflow problem map (sources of variability → downstream impacts).",
+    }),
+  );
+
+  children.push(
+    ...tryEmbedImage({
+      repoRoot,
+      candidates: [
+        "src/assets/images/generated/proposal_product_innovation_map_1536x672.png",
+        "src/assets/images/generated/proposal_product_innovation_map.png",
+      ],
+      width: 640,
+      height: 280,
+      caption: "Figure 3. Product innovation map (data → modules → measurable outcomes).",
+    }),
+  );
+
+  children.push(
+    ...tryEmbedImage({
+      repoRoot,
+      candidates: [
+        "src/assets/images/generated/proposal_study_design_flow_1536x672.png",
+        "src/assets/images/generated/proposal_study_design_flow.png",
+      ],
+      width: 640,
+      height: 280,
+      caption: "Figure 4. Collaboration study design (baseline → pilot → scale → product integration).",
+    }),
+  );
+
+  children.push(
+    ...tryEmbedImage({
+      repoRoot,
+      candidates: [
         "src/assets/images/generated/proposal_program_architecture_1536x672.png",
         "src/assets/images/generated/proposal_program_architecture.png",
       ],
       width: 640,
       height: 280,
-      caption: "Figure 1. Program architecture (informatics + Radimetrics + injector + contrast).",
+      caption: "Figure 5. Program architecture (informatics + Radimetrics + injector + contrast).",
     }),
   );
 

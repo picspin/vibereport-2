@@ -244,6 +244,10 @@ export function renderProposalHtml({ proposal, requirements, cssText, images = [
 
   const figureForSectionId = (id) => {
     const key = String(id || "");
+    if (key === "5.1") return imgByName.get("proposal_graphical_abstract");
+    if (key === "5.2") return imgByName.get("proposal_problem_map");
+    if (key === "5.3") return imgByName.get("proposal_product_innovation_map");
+    if (key === "5.4") return imgByName.get("proposal_study_design_flow");
     if (key === "5.5") return imgByName.get("proposal_program_architecture");
     if (key === "5.8") return imgByName.get("proposal_dose_governance_loop");
     if (key === "5.9") return imgByName.get("proposal_consortium_scaling_blueprint");
